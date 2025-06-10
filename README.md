@@ -8,7 +8,7 @@ The project is split into three independent components:
 3.rasa_layer — Rasa Bot Integration
 
 Project Structure
-
+"""
 MTECH_KU
 ├── chatbot.html
 ├── config.py
@@ -42,7 +42,7 @@ MTECH_KU
     ├── chroma_vectorstore.py
     ├── embedding.py
     ├── init.py
-
+"""
 
 Setup Environment
 
