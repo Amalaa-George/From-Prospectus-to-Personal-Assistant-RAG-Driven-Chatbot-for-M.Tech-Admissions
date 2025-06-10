@@ -79,4 +79,4 @@ python3 -m http.server 8003  --bind 0.0.0.0
 Now open your browser and visit: http://localhost:8003/chatbot.html
 
  Notes:
-The RAG backend uses ChromaDB with custom chunking and Jina Embeddings v3.Vector data is stored in rasa_layer/actions/mtech_chroma_data/ — this includes, chroma.sqlite3 and the vectorstore data.# Mtech_Chatbot
+The RAG backend uses ChromaDB with custom chunking and Jina Embeddings v3.Vector data is stored in rasa_layer/actions/mtech_chroma_data/ — this includes, chroma.sqlite3 and the vectorstore data.
