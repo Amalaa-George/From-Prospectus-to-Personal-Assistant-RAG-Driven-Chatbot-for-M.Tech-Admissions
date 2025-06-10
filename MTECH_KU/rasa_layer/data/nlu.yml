@@ -1,0 +1,68 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hello
+      - hi
+      - hey
+      - good morning
+      - good afternoon
+      - good evening
+
+  - intent: query
+    examples: |
+      - Fees for computer science department
+      - what are the fees
+      - fee structure
+      - admission fees
+      - tuition fees
+      - how much does it cost
+      - last date for online application
+      - application deadline
+      - when can I apply
+      - application process
+      - how to apply
+      - admission process
+      - entrance exam
+      - entrance test
+      - exam dates
+      - when is the exam
+      - Courses
+      - what courses are available
+      - course details
+      - programs offered
+      - degree programs
+      - Eligibility
+      - eligibility criteria
+      - admission requirements
+      - qualification needed
+      - who can apply
+      - Computer Science
+      - computer science department
+      - CS department
+      - IT courses
+      - Futures Studies
+      - futures studies department
+      - future studies course
+      - Optoelectronics
+      - opto electronics
+      - optoelectronics department
+      - electronics course
+      - Application Process
+      - how to apply online
+      - online application
+      - application form
+      - Entrance Exam
+      - entrance examination
+      - admission test
+      - qualifying exam
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you later
+      - thanks
+      - thank you
+

@@ -1,0 +1,23 @@
+version: "3.1"
+
+intents:
+  - greet
+  - query
+  - goodbye
+  - nlu_fallback
+
+actions:
+  - action_rag_query
+  - utter_greet
+  - utter_goodbye
+
+responses:
+  utter_greet:
+    - text: "Hello! I'm University Bot, your assistant at Kerala University. How can I help you?"
+  
+  utter_goodbye:
+    - text: "Goodbye! Feel free to ask if you have more questions about Kerala University."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

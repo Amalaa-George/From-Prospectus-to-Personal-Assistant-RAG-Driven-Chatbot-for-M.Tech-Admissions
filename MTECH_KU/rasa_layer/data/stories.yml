@@ -1,0 +1,143 @@
+version: "3.1"
+
+stories:
+  - story: greeting and query flow
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: query
+      - action: action_rag_query
+
+  - story: direct query without greeting
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: multiple queries in succession
+    steps:
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+
+  - story: fee inquiry
+    steps:
+      - intent: query
+        entities: []
+      - action: action_rag_query
+
+  - story: application process inquiry
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: department specific query
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: course information query  
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: eligibility criteria query
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: entrance exam query
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: greeting followed by goodbye
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: query then goodbye
+    steps:
+      - intent: query
+      - action: action_rag_query
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: fallback handling
+    steps:
+      - intent: nlu_fallback
+      - action: action_rag_query
+
+  - story: complex conversation flow
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: computer science department inquiry
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: futures studies department inquiry
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: optoelectronics department inquiry
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: general information inquiry
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: university information flow
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+
+  - story: persistent user asking multiple questions
+    steps:
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query
+
+  - story: user asks about application deadline
+    steps:
+      - intent: query
+      - action: action_rag_query
+
+  - story: user needs help with admission process
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: query
+      - action: action_rag_query
+
+  - story: fallback then valid query
+    steps:
+      - intent: nlu_fallback
+      - action: action_rag_query
+      - intent: query
+      - action: action_rag_query

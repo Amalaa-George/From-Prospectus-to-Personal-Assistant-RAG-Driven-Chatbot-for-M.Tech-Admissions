@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>University Chatbot</title>
+  <style>
+    /* Your existing styles remain unchanged */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f0f0f0;
+    }
+    #main-content {
+      background-image: url('https://exams.keralauniversity.ac.in/Images/Imagedisplay/uok6.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      position: relative;
+    }
+    #main-content .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #intro {
+      text-align: center;
+      color: #ffffff;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
+      max-width: 700px;
+    }
+    #intro img {
+      width: 120px;
+      margin-bottom: 20px;
+      filter: brightness(0) invert(1);
+    }
+    #intro h1 {
+      font-size: 2.2em;
+      margin-bottom: 12px;
+    }
+    #intro p {
+      font-size: 1.1em;
+      line-height: 1.6em;
+      text-align: justify;
+    }
+    #chatbox {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 420px;
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999;
+    }
+    #chatbox.open {
+      display: flex;
+    }
+    #chat-header {
+      background: #4a90e2;
+      color: white;
+      padding: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #messages {
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .msg {
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user {
+      align-self: flex-end;
+      background: #e0f7fa;
+    }
+    .bot {
+      align-self: flex-start;
+      background: #f0f0f0;
+      display: flex;
+      align-items: flex-start;
+    }
+    .bot img {
+      width: 120px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .options button {
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: none;
+      background: #e3f2fd;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .options button:hover {
+      background: #bbdefb;
+    }
+    #input-area {
+      display: none;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background: #fafafa;
+    }
+    #user-input {
+      flex: 0.8;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      margin-right: 8px;
+    }
+    #send-btn {
+      padding: 8px 16px;
+      background: #4a90e2;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    #chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    #back-home {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #64b5f6;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      z-index: 1001;
+    }
+    #back-home:hover {
+      background: #ffb74d;
+    }
+  </style>
+</head>
+<body>
+
+<div id="main-content">
+  <div class="overlay">
+    <div id="intro">
+      <img src="https://media.collegedekho.com/media/img/institute/logo/Kerala_University_Emblem.png" alt="Kerala University Logo" />
+      <h1>Welcome to Kerala University </h1>
+      <p>University of Kerala (formerly known as University of Travancore) is a state-run public university in Thiruvananthapuram, the state capital of Kerala, India. It was established in 1937 by a promulgation of the Maharajah of Travancore, Chithira Thirunal Balarama Varma . It was the first university in Kerala, and among the first in the country. It is accredited by NAAC with highest grade of 'A++' and scored 3.67 points out of 4.</p>
+    </div>
+  </div>
+</div>
+
+<div id="chatbox">
+  <div id="chat-header">🎓 Kerala University Bot</div>
+  <div id="messages"></div>
+  <button id="back-home" onclick="goBackHome()">↩️ Home</button>
+  <div id="input-area">
+    <input type="text" id="user-input" placeholder="Type your question..." />
+    <button id="send-btn" onclick="sendMessage()">▶️</button>
+  </div>
+</div>
+
+<button id="chat-toggle" onclick="toggleChat()">💬</button>
+
+<script>
+let context = {
+  filter_type: null,
+  department: null,
+  section: null,
+  awaitingCustomQuery: false,
+  greetingDisplayed: false,
+  lastOptionSet: null 
+};
+
+function toggleChat() {
+  const box = document.getElementById('chatbox');
+  box.classList.toggle('open');
+  if (box.classList.contains('open') && !context.filter_type && !context.greetingDisplayed) {
+    setTimeout(() => {
+      appendMessage("Hello! I'm University Bot, your assistant at Kerala University. What can I help you with today?", "bot", true);
+      showMainOptions();
+      context.greetingDisplayed = true;
+    }, 300);
+  }
+}
+
+function appendMessage(text, className, showAvatar = false, useAnimation = false) {
+  const msg = document.createElement("div");
+  msg.className = `msg ${className}`;
+  if (className === "bot" && showAvatar) {
+    const avatar = document.createElement("img");
+    avatar.src = "https://media3.giphy.com/media/lTFoYdCiKbt0XU2ofv/200w.gif?cid=6c09b952hvhvqogjyev2zcdgi2dgbmaaoxryp6g9mna9an0v&ep=v1_gifs_search&rid=200w.gif&ct=g";
+    avatar.alt = "Smiling Robot Avatar";
+    msg.appendChild(avatar);
+  }
+  
+  const messages = document.getElementById("messages");
+  messages.appendChild(msg);
+  
+  if (useAnimation && className === "bot") {
+    const textContainer = document.createElement("span");
+    msg.appendChild(textContainer);
+    typeText(textContainer, text, 15);
+  } else {
+    msg.innerHTML += text;
+  }
+  
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function toggleInputArea(show) {
+  document.getElementById("input-area").style.display = show ? "flex" : "none";
+}
+
+
+function showMainOptions() {
+  clearOptions();
+  const optionsDiv = document.createElement("div");
+  optionsDiv.className = 'options';
+  optionsDiv.innerHTML = `
+    <button onclick="selectCategory('general')">📘 General Info</button>
+    <button onclick="selectCategory('department')">🏛️ Department Info</button>`;
+  document.getElementById("messages").appendChild(optionsDiv);
+  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+
+  toggleInputArea(false);
+}
+
+function addBackHomeOption() {
+  document.getElementById('back-home').style.display = 'block';
+}
+
+function goBackHome() {
+  context = { filter_type: null, department: null, section: null, awaitingCustomQuery: false, greetingDisplayed: true, lastOptionSet: null };
+  clearOptions();
+  appendMessage("🔁 Back to the main menu. What do you want to know?", "bot", true);
+  setTimeout(() => showMainOptions(), 500);
+  document.getElementById('back-home').style.display = 'none';
+  toggleInputArea(false);
+}
+
+function clearOptions() {
+  document.querySelectorAll(".options").forEach(el => el.remove());
+}
+
+function selectCategory(type) {
+  context.filter_type = type;
+  context.department = null;
+  context.section = null;
+  context.awaitingCustomQuery = false;
+  appendMessage(`✅ Selected: ${type === 'general' ? 'General Information' : 'Department Specific Info'}`, "user");
+  clearOptions();
+  renderSubOptions(type);
+  addBackHomeOption();
+}
+
+function renderSubOptions(type) {
+  const opts = document.createElement("div");
+  opts.className = 'options';
+  context.lastOptionSet = type;
+
+  opts.innerHTML = type === 'general'
+    ? `<button onclick="selectSubOption('Application Process', this)">📝 How to Apply</button>
+       <button onclick="selectSubOption('Entrance Exam', this)">🧪 Entrance Exam</button>
+       <button onclick="selectSubOption('other', this)">💬 Other</button>`
+    : `<button onclick="selectDepartment('Computer Science')">💻 Computer Science</button>
+       <button onclick="selectDepartment('Futures Studies')">🔮 Futures Studies</button>
+       <button onclick="selectDepartment('Optoelectronics')">🔬 Opto Electronics</button>`;
+
+  document.getElementById("messages").appendChild(opts);
+  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+}
+
+function selectDepartment(dept) {
+  context.department = dept;
+  appendMessage(`🏛️ Department: ${dept}`, "user");
+  clearOptions();
+
+  const sections = document.createElement("div");
+  sections.className = 'options';
+  context.lastOptionSet = 'department-section';
+
+  sections.innerHTML = `
+    <button onclick="selectSubOption('Courses', this)">📚 Courses</button>
+    <button onclick="selectSubOption('Fees', this)">💰 Fees</button>
+    <button onclick="selectSubOption('Eligibility', this)">✅ Eligibility</button>
+    <button onclick="selectSubOption('other', this)">💬 Other</button>`;
+
+  document.getElementById("messages").appendChild(sections);
+  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+}
+
+function selectSubOption(section, btn) {
+  highlightSelectedOption(btn);
+  if (section === 'other') {
+    context.section = null;
+    context.awaitingCustomQuery = true;
+    appendMessage("💬 Other", "user");
+    appendMessage("📝 Please type your question below.", "bot");
+    toggleInputArea(true);
+  } else {
+    context.section = section;
+    appendMessage(`📌 Topic: ${section}`, "user");
+    sendMessage(section, true);
+  }
+}
+
+function highlightSelectedOption(btn) {
+  btn.parentElement.querySelectorAll("button").forEach(b => {
+    b.style.background = "#e3f2fd";
+    b.style.fontWeight = "normal";
+  });
+  btn.style.background = "#aed581"; 
+  btn.style.fontWeight = "bold";
+}
+
+function buildFullQuery(userQuery = "") {
+  let queryParts = [];
+  if (context.filter_type === 'general') {
+    if (context.section) queryParts.push(context.section);
+    if (userQuery) queryParts.push(userQuery);
+  } else if (context.filter_type === 'department') {
+    if (context.section && context.department) {
+      queryParts.push(`${context.section} of ${context.department} department`);
+    } else if (context.department) {
+      queryParts.push(`Information about ${context.department} department`);
+    }
+    if (userQuery) queryParts.push(userQuery);
+  }
+  return queryParts.join(' ').trim();
+}
+
+
+async function sendMessage(manualText = null, isAuto = false) {
+  const input = document.getElementById("user-input");
+  let userQuery = manualText || input.value.trim();
+  if (!userQuery && !context.section) return;
+  let fullQuery = buildFullQuery(userQuery);
+  
+  if (!isAuto) appendMessage(`📝 You: ${userQuery}`, "user");
+  input.value = "";
+
+  toggleInputArea(false);
+
+  const loading = document.createElement("div");
+  loading.className = "msg bot";
+  loading.innerHTML = `<img class="thinking-gif" src="https://cdn3d.iconscout.com/3d/premium/thumb/robot-character-with-a-light-bulb-floating-above-its-head-3d-icon-download-in-png-blend-fbx-gltf-file-formats--artificial-intelligence-ai-bot-pack-science-technology-icons-11431378.png" alt="Thinking Robot" /> <em>🤖 Thinking..</em>`;
+  document.getElementById("messages").appendChild(loading);
+  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+
+  try {
+    console.log("Making req to rasa with query:", fullQuery);
+    const res = await fetch("http://192.168.6.184:5005/webhooks/rest/webhook", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        sender: "test_user", 
+        message: fullQuery })
+    });
+    console.log("response status",res.status);
+    console.log("response headers",res.headers);
+    const data = await res.json();
+    console.log("response data",data);
+    loading.remove();
+
+    if (data.length > 0) {
+      for (const msg of data) {
+        if (msg.text) {
+          appendMessage(msg.text, "bot", false, true); 
+        }
+      }
+     
+      setTimeout(() => showPostAnswerOptions(), 1500); 
+    } else {
+      console.log("no data receieved from rasa");
+      appendMessage("Sorry, I didn't understand that.", "bot", false, true);
+      setTimeout(() => showPostAnswerOptions(), 1500);
+    }
+
+  } catch (err) {
+    console.log("error connecting to rasa",err);
+    loading.innerHTML = " Failed to connect to server.";
+    setTimeout(() => showPostAnswerOptions(), 1500);
+  }
+}
+ 
+
+function showPostAnswerOptions() {
+  clearOptions();
+  const optionsDiv = document.createElement("div");
+  optionsDiv.className = "options";
+  optionsDiv.innerHTML = `
+    <button onclick="askAnother()">🔁 Know More</button>
+    <button onclick="goBackHome()">🏠 Back to Home</button>`;
+  document.getElementById("messages").appendChild(optionsDiv);
+  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+}
+
+function askAnother() {
+  clearOptions();
+  context.section = null;
+  context.awaitingCustomQuery = false;
+  
+  if (context.filter_type === 'general') {
+    appendMessage("🔁 What else would you like to know about general information?", "bot");
+    renderSubOptions('general');
+  } else if (context.filter_type === 'department' && context.department) {
+    appendMessage(`🔁 What else would you like to know about ${context.department} department?`, "bot");
+    const sections = document.createElement("div");
+    sections.className = 'options';
+    sections.innerHTML = `
+      <button onclick="selectSubOption('Courses', this)">📚 Courses</button>
+      <button onclick="selectSubOption('Fees', this)">💰 Fees</button>
+      <button onclick="selectSubOption('Eligibility', this)">✅ Eligibility</button>
+      <button onclick="selectSubOption('other', this)">💬 Other</button>`;
+    document.getElementById("messages").appendChild(sections);
+    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+  } else {
+
+    appendMessage("🔁 What would you like to know?", "bot");
+    showMainOptions();
+  }
+}
+
+function typeText(element, text, delay = 15) {
+  let index = 0;
+  const interval = setInterval(() => {
+    element.innerHTML += text.charAt(index++);
+    if (index >= text.length) clearInterval(interval);
+    const messages = document.getElementById("messages");
+    messages.scrollTop = messages.scrollHeight;
+  }, delay);
+}
+</script>
+
+
+</body>
+</html>
