@@ -53,9 +53,10 @@ conda create -n chatbot_env python=3.9.21
 conda activate chatbot_env
 pip install -r requirements.txt
 
-Update IP Addresses
-In the chatbot.html, you must manually update the server IP address 
+Updations
 
+In the chatbot.html, you must manually update the server IP address.
+Update .env file according to your jina and groq api keys.
 
 Run the Full System (3 Terminals)
 
