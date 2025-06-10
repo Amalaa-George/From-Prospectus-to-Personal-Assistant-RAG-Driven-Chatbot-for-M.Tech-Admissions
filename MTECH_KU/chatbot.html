@@ -387,7 +387,7 @@ async function sendMessage(manualText = null, isAuto = false) {
 
   try {
     console.log("Making req to rasa with query:", fullQuery);
-    const res = await fetch("http://192.168.6.184:5005/webhooks/rest/webhook", {
+    const res = await fetch("http://***.***.*.***:5005/webhooks/rest/webhook", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
