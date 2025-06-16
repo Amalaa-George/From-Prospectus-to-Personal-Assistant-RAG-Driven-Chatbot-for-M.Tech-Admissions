@@ -1,5 +1,4 @@
 """
-llm.py
 
 This module provides a wrapper around the Groq API to interact with LLaMA 3 models.
 It supports prompt-based response generation with streaming and includes retry and timeout handling
@@ -35,24 +34,48 @@ class LLM:
     """
 
     def __init__(self, model_name: str = LLM_MODEL_NAME, api_key: str = GROQ_API_KEY):
+        """
+        Initializes the LLM client and sets up initial system message.
+
+        Args:
+            model_name (str): Name of the model to be used from Groq.
+            api_key (str): Groq API key for authentication.
+
+        Raises:
+            ValueError: If the API key is not set.
+        """
+
         if not api_key:
             raise ValueError("GROQ_API_KEY is not set. Please check your environment configuration.")
         self.client = Groq(api_key=api_key)
         self.model = model_name
+        self.chat_history = [
+            {"role": "system", "content": "You are a helpful assistant."}
+        ]
 
     def _call_llm(self, prompt: str):
         """
-        Internal method to make a streaming LLM request to the Groq API.
-        
+        Internal method to prepare and send a streaming chat completion request to the LLM.
+
+        This method maintains a rolling window of the last 3 user-assistant message pairs
+        (plus the system message) to provide short-term context during conversation.
+
         Args:
-            prompt (str): Input prompt string for the LLM.
+            prompt (str): The user input to include in the conversation history.
 
         Returns:
-            Iterable: Streaming chunks from the LLM.
+            Generator: A generator yielding streamed response chunks from the Groq API.
         """
+        # Add latest user input to history
+        self.chat_history.append({"role": "user", "content": prompt})
+        logger.info("User input added to chat history.")
+        # Keep only last 3 user-assistant pairs (6 messages) + system message
+        filtered_history = [self.chat_history[0]] + self.chat_history[-6:]
+        logger.debug(f"Filtered chat history (memory): {filtered_history}")
+
         return self.client.chat.completions.create(
             model=self.model,
-            messages=[{"role": "user", "content": prompt}],
+            messages=filtered_history,
             temperature=0.7,
             top_p=1,
             max_tokens=1024,
@@ -78,11 +101,19 @@ class LLM:
                     future = executor.submit(self._call_llm, prompt)
                     response_chunks = future.result(timeout=timeout)
 
-                return "".join(
+                # Collect streamed response
+                response = "".join(
                     chunk.choices[0].delta.content
                     for chunk in response_chunks
                     if chunk.choices[0].delta.content
                 )
+
+                # Add assistant reply to history
+                self.chat_history.append({"role": "assistant", "content": response})
+                logger.info("Assistant response added to chat history.")
+                logger.debug(f"Updated chat history: {self.chat_history}")
+
+                return response
 
             except TimeoutError:
                 logger.warning(f"[Attempt {attempt + 1}] LLM request timed out.")
