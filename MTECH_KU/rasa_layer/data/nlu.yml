@@ -66,3 +66,56 @@ nlu:
       - thanks
       - thank you
 
+  - intent: ask_faq
+    examples: |
+      - Entrance Exam
+      - Tell me about the entrance test
+      - What is the entrance exam?
+      - Application Process
+  
+  - intent: ask_faq
+    examples: |
+      - Courses of Computer Science department
+      - What courses does the Computer Science department offer?
+      - Tell me about M.Tech in Computer Science
+      - What specialization is available in Computer Science?
+      - What are the available seats in CS department?
+      - Fees of Computer Science department
+      - What is the fee for M.Tech Computer Science?
+      - How much does Computer Science cost?
+      - Give me the CS fee details
+      - What are the charges for Computer Science course?
+      - Eligibility of Computer Science department
+      - What is the eligibility for Computer Science M.Tech?
+      - Who can apply for CS M.Tech?
+      - Is GATE required for CS admission?
+      - Tell me the admission criteria for Computer Science
+      - Courses of Futures Studies department
+      - What courses are in Futures Studies?
+      - Tell me about M.Tech in Technology Management
+      - How many seats are in Futures Studies?
+      - Program offered in Futures Studies department?
+      - Fees of Futures Studies department
+      - What is the fee for Technology Management?
+      - How much to pay for Futures Studies?
+      - What is the cost of Futures Studies M.Tech?
+      - Give fee details of Futures Studies department
+      - Eligibility of Futures Studies department
+      - What is the eligibility for Technology Management?
+      - Who can apply for Futures Studies M.Tech?
+      - Do I need GATE for Futures Studies?
+      - Admission criteria for Futures Studies department
+      - Courses of Optoelectronics department
+      - What are the programs in Optoelectronics?
+      - M.Tech specialization in Optoelectronics?
+      - What does the Optoelectronics department offer?
+      - How many seats are in Optoelectronics M.Tech?
+      - Fees of Optoelectronics department
+      - What is the fee for Optoelectronics course?
+      - Give me the cost for M.Tech in Optoelectronics
+      - How much for Optoelectronics admission?
+      - Eligibility of Optoelectronics department
+      - What is the eligibility for M.Tech Optoelectronics?
+      - Admission requirement for Optoelectronics?
+      - Is GATE required for Optoelectronics department?
+      - Who can apply for Optoelectronics M.Tech?
