@@ -6,50 +6,50 @@ stories:
       - intent: greet
       - action: utter_greet
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: direct query without greeting
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: multiple queries in succession
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: fee inquiry
     steps:
       - intent: query
         entities: []
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: application process inquiry
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: department specific query
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: course information query  
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: eligibility criteria query
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: entrance exam query
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: greeting followed by goodbye
     steps:
@@ -61,83 +61,82 @@ stories:
   - story: query then goodbye
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: goodbye
       - action: utter_goodbye
 
   - story: fallback handling
     steps:
       - intent: nlu_fallback
-      - action: action_rag_query
-
+      - action: action_smart_router
   - story: complex conversation flow
     steps:
       - intent: greet
       - action: utter_greet
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: goodbye
       - action: utter_goodbye
 
   - story: computer science department inquiry
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: futures studies department inquiry
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: optoelectronics department inquiry
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: general information inquiry
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: university information flow
     steps:
       - intent: greet
       - action: utter_greet
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: persistent user asking multiple questions
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: user asks about application deadline
     steps:
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: user needs help with admission process
     steps:
       - intent: greet
       - action: utter_greet
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
 
   - story: fallback then valid query
     steps:
       - intent: nlu_fallback
-      - action: action_rag_query
+      - action: action_smart_router
       - intent: query
-      - action: action_rag_query
+      - action: action_smart_router
