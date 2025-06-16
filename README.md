@@ -32,9 +32,10 @@ MTECH_KU
 │   │   └── stories.yml
 │   ├── domain.yml
 │   ├── endpoints.yml
+    ├── faq_data.py
 │   ├── init.py
 │   ├── models
-│   │   └── 20250523-095530-brave-loop.tar.gz
+│   │   └──20250616-093921-violent-shell.tar.gz
 │   └── tests
 │       └── test_stories.yml
 ├── README.md
@@ -60,13 +61,13 @@ Update .env file according to your jina and groq api keys.
 
 Run the Full System (3 Terminals)
 
-Terminal 1: RASA Action Server
+Terminal 1: RASA Core
 
 cd /MTECH_KU/rasa_layer
 conda activate chatbot_env
 rasa run  --cors "*" 
 
-Terminal 2: RASA Core
+Terminal 2: RASA Action Server 
 
 cd /MTECH_KU/rasa_layer/actions
 conda activate chatbot_env
