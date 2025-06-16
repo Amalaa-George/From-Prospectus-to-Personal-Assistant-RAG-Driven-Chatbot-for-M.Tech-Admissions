@@ -62,21 +62,21 @@ Update .env file according to your jina and groq api keys.
 Run the Full System (3 Terminals)
 
 Terminal 1: RASA Core
-
+<pre>
 cd /MTECH_KU/rasa_layer
 conda activate chatbot_env
 rasa run  --cors "*" 
-
+</pre>
 Terminal 2: RASA Action Server 
-
+<pre>
 cd /MTECH_KU/rasa_layer/actions
 conda activate chatbot_env
 rasa run actions 
-
+</pre>
 Terminal 3: Serve HTML Interface
-
+<pre>
 python3 -m http.server 8003  --bind 0.0.0.0
-
+</pre>
 Now open your browser and visit: http://localhost:8003/chatbot.html
 
  Notes:
