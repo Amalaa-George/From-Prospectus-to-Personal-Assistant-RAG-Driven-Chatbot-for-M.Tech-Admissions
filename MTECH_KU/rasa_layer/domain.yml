@@ -5,9 +5,10 @@ intents:
   - query
   - goodbye
   - nlu_fallback
+  - ask_faq
 
 actions:
-  - action_rag_query
+  - action_smart_router
   - utter_greet
   - utter_goodbye
 
