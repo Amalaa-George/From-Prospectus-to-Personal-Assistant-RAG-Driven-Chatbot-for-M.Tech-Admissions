@@ -48,12 +48,12 @@ MTECH_KU
 </pre>
 
 Setup Environment
-
+<pre>
 cd /MTECH_KU
 conda create -n chatbot_env python=3.9.21
 conda activate chatbot_env
 pip install -r requirements.txt
-
+</pre>
 Updations
 
 In the chatbot.html, you must manually update the server IP address.
