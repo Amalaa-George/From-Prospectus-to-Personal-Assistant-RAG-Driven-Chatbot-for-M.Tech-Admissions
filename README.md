@@ -35,7 +35,7 @@ MTECH_KU
     ├── faq_data.py
 │   ├── init.py
 │   ├── models
-│   │   └──20250523-095530-brave-loop.tar.gz
+│   │   └──20250616-093921-violent-shell.tar.gz
 │   └── tests
 │       └── test_stories.yml
 ├── README.md
